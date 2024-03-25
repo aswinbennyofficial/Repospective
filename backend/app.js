@@ -11,9 +11,9 @@ dotenv.config();
 const app = express();
 
 
-// Fetch the PORT and GITHUB_TOKEN from the environment
+// Fetch the PORT  from the environment
 const PORT = process.env.PORT || 3000; // Default to 3000 if PORT is not specified in .env
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
 
 
 

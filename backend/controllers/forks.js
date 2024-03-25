@@ -3,10 +3,17 @@
 
 const axios = require('axios');
 
-async function getForks(username, repo, sort) {
+  
+
+async function getForks(username, repo, sort, GITHUB_TOKEN) {
+
+    const headers = {
+        Authorization: `Bearer ${GITHUB_TOKEN}`
+    };
+
   try {
     // Make a GET request to the GitHub API using Axios
-    const response = await axios.get(`https://api.github.com/repos/${username}/${repo}/forks?sort=${sort}&per_page=100`);
+    const response = await axios.get(`https://api.github.com/repos/${username}/${repo}/forks?sort=${sort}&per_page=100`, { headers });
 
     // Check the response status code (optional)
     if (response.status === 200) {

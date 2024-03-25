@@ -1,9 +1,12 @@
 const express = require('express');
 //  Create a express router object
 const router = express.Router();
-
 const { getForks } = require('./../controllers/forks');
+const dotenv = require('dotenv');
+dotenv.config();
 
+// Load api token from .env file
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 // Define your API routes
 router.get('/', (req, res) => {
@@ -13,14 +16,16 @@ router.get('/', (req, res) => {
 
 // get list of forks
 router.get('/forks/:username/:repo', async (req, res) => {
+
+
   
   const { username, repo } = req.params;
   const { limit = 100, sort = 'stargazers' } = req.query;
-  // watchers
+  // newest, oldest, stargazers, watchers are other fields
 
   try {
     // Call the getForks function with async/await
-    const forks = await getForks(username, repo, sort);
+    const forks = await getForks(username, repo, sort, GITHUB_TOKEN);
 
     if (forks) {
       // Send the fetched fork data as JSON response (assuming successful)
