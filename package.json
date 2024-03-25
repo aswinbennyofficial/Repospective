@@ -2,9 +2,9 @@
   "name": "repospective",
   "version": "1.0.0",
   "description": "A project to get analytics of a github repo",
-  "main": "backend/app.js", 
+  "main": "backend/app.js",
   "scripts": {
-    "start": "node backend/app.js", 
+    "start": "node backend/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/aswinbennyofficial/Repospective#readme",
   "dependencies": {
+    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
-    "express": "^4.19.1"
+    "express": "^4.19.1",
+    "node-fetch": "^3.3.2"
   }
 }

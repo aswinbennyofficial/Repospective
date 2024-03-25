@@ -1,19 +1,17 @@
 const express = require('express');
 //  Create a express router object
 const router = express.Router();
+// Import router object from routes.js
+const routesV1 = require('./api_v1.js');
 
 // Define your API routes
 router.get('/healthcheck', (req, res) => {
   res.send('I am OK');
 });
 
-router.get('/', (req, res) => {
-    // Path to the index.html file
-    const indexPath = path.join(__dirname, '../../frontend/index.html');
-    // Send the index.html file as response
-    res.sendFile(indexPath);    
-    
-});
+// Version v1 of the API
+router.use('/api/v1', routesV1);
+
 
 
 
