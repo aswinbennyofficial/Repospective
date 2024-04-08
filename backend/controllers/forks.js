@@ -15,7 +15,7 @@ async function getForks(username, repo, sort, GITHUB_TOKEN) {
     // Make a GET request to the GitHub API using Axios
     const response = await axios.get(`https://api.github.com/repos/${username}/${repo}/forks?sort=${sort}&per_page=100`, { headers });
 
-    // Check the response status code (optional)
+    // Check the response status code 
     if (response.status === 200) {
       // Extract the fork data from the response (assuming it's JSON)
       const forks = response.data.map(fork => ({

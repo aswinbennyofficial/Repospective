@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Repo Analytics</title>
+  <!-- Include Daisy UI CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@1.0.0/dist/full.css">
+  <!-- Include D3.js library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">GitHub Repo Analytics</h1>
+    <!-- Container for the chart -->
+    <div id="chart-container"></div>
+  </div>
+
+  <script>
+    // Fetch repository analytics data from GitHub API
+    fetch('https://api.github.com/repos/torvalds/linux')
+      .then(response => response.json())
+      .then(data => {
+        // Extract relevant data for visualization
+        const { forks_count, watchers_count, stargazers_count, open_issues_count } = data;
+
+        // Data for visualization
+        const analyticsData = [
+          { label: 'Forks', value: forks_count },
+          { label: 'Watchers', value: watchers_count },
+          { label: 'Stars', value: stargazers_count },
+          { label: 'Open Issues', value: open_issues_count }
+        ];
+
+        // Set up D3.js chart dimensions
+        const width = 600;
+        const height = 400;
+        const margin = { top: 20, right: 20, bottom: 30, left: 40 };
+
+        // Create SVG element
+        const svg = d3.select('#chart-container')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        // Create scales for x and y axes
+        const xScale = d3.scaleBand()
+          .domain(analyticsData.map(d => d.label))
+          .range([margin.left, width - margin.right])
+          .padding(0.1);
+
+        const yScale = d3.scaleLinear()
+          .domain([0, d3.max(analyticsData, d => d.value)])
+          .nice()
+          .range([height - margin.bottom, margin.top]);
+
+        // Create bars for each data point
+        svg.selectAll('rect')
+          .data(analyticsData)
+          .join('rect')
+          .attr('x', d => xScale(d.label))
+          .attr('y', d => yScale(d.value))
+          .attr('width', xScale.bandwidth())
+          .attr('height', d => height - margin.bottom - yScale(d.value))
+          .attr('fill', 'steelblue');
+
+        // Create x-axis
+        svg.append('g')
+          .attr('transform', `translate(0,${height - margin.bottom})`)
+          .call(d3.axisBottom(xScale));
+
+        // Create y-axis
+        svg.append('g')
+          .attr('transform', `translate(${margin.left},0)`)
+          .call(d3.axisLeft(yScale).ticks(null, 's'));
+
+        // Add labels
+        svg.append('text')
+          .attr('x', width / 2)
+          .attr('y', height - margin.bottom / 2)
+          .attr('text-anchor', 'middle')
+
+        svg.append('text')
+          .attr('transform', 'rotate(-90)')
+          .attr('x', -(height / 2))
+          .attr('y', margin.left / 2)
+          .attr('text-anchor', 'middle')
+          .text('Count');
+      })
+      .catch(error => {
+        console.error('Error fetching repository data:', error);
+      });
+  </script>
+</body>
+</html>

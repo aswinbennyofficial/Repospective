@@ -2,6 +2,7 @@ const express = require('express');
 //  Create a express router object
 const router = express.Router();
 const { getForks } = require('./../controllers/forks');
+const { getRepoDetails } = require('./../controllers/repoDetails');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -16,7 +17,6 @@ router.get('/', (req, res) => {
 
 // get list of forks
 router.get('/forks/:username/:repo', async (req, res) => {
-
 
   
   const { username, repo } = req.params;
@@ -38,6 +38,26 @@ router.get('/forks/:username/:repo', async (req, res) => {
     // Handle any errors during the request or in getForks
     console.error('Error fetching forks:', error.message);
     res.status(500).json({ error: 'Internal server error' }); // Or a more specific error message
+  }
+});
+
+
+
+// Fetch repo details
+router.get('/repo/:username/:repo', async (req, res) => {
+  const { username, repo } = req.params;
+
+  try {
+    const repoDetails = await getRepoDetails(username, repo, GITHUB_TOKEN);
+
+    if (repoDetails) {
+      res.json(repoDetails);
+    } else {
+      res.status(500).json({ error: 'Failed to fetch repo details' });
+    }
+  } catch (error) {
+    console.error('Error fetching repo details:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
