@@ -40,6 +40,8 @@
 
         const data = await response.json();
         let config = data.config.replace(/>\-|\|2\-/g, ''); // Remove '>-', '|2-'
+        config = config.replace(/'on':/g, 'on:'); // Remove 'on' to 'on'
+        
         const configBox = document.getElementById('config-box');
         configBox.textContent = config;
       } catch (error) {
