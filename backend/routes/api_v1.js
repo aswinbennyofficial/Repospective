@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { getForks } = require('./../controllers/forks');
 const { getRepoDetails } = require('./../controllers/repoDetails');
+const {generateGitHubActionsConfig} = require('./../controllers/ga-configGenerator');
+
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -59,6 +61,22 @@ router.get('/repo/:username/:repo', async (req, res) => {
     console.error('Error fetching repo details:', error.message);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+
+// Middleware to parse JSON bodies
+router.use(express.json());
+
+// Route to create github actions configuration
+router.post('/ga-config', (req, res) => {
+
+  const {branchName, language, requireTests, registryType, username, imageName} = req.body;
+  const config = generateGitHubActionsConfig(branchName, language, requireTests, registryType, username, imageName);
+  // Send as json response where the response will have keyt called config
+  const response = {
+    "config":config
+  };
+  res.json(response);
 });
 
 

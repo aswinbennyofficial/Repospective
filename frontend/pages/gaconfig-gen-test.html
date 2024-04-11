@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Actions Config Viewer</title>
+  <style>
+    .code-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>GitHub Actions Config Viewer</h1>
+  <div id="config-box" class="code-box"></div>
+  <button onclick="fetchConfig()">Fetch Config</button>
+
+  <script>
+    async function fetchConfig() {
+      const requestBody = JSON.stringify({
+        branchName: "main",
+        language: "go",
+        requireTests: true,
+        registryType: "Docker Hub",
+        username: "your_dockerhub_username",
+        imageName: "your_image_name"
+      });
+
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/ga-config', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: requestBody
+        });
+
+        const data = await response.json();
+        let config = data.config.replace(/>\-|\|2\-/g, ''); // Remove '>-', '|2-'
+        const configBox = document.getElementById('config-box');
+        configBox.textContent = config;
+      } catch (error) {
+        console.error('Error fetching GitHub Actions config:', error);
+      }
+    }
+  </script>
+</body>
+</html>
