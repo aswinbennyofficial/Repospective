@@ -1,5 +1,4 @@
 const yaml = require('js-yaml');
-// const yaml = require('yamljs');
 
 const generateGitHubActionsConfig = (branchName, language, requireTests, username, imageName) => {
   // Validate input parameters (optional)
@@ -36,12 +35,11 @@ const generateGitHubActionsConfig = (branchName, language, requireTests, usernam
           },
           {
             name: 'Login to Docker Hub',
-            run:'echo \"${{ secrets.DOCKER_HUB_PASSWORD }}\" | docker login --username \"${{ secrets.DOCKER_HUB_USERNAME }}\" --password-stdin'
+            run: `echo "\${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login --username "\${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin`
           },
           {
             name: 'Build and push Docker image',
-            run: `docker buildx create --use && docker buildx build --platform linux/amd64,linux/arm64 -t ${username}/${imageName}:latest --push .
-            `,
+            run: `docker buildx create --use && docker buildx build --platform linux/amd64,linux/arm64 -t ${username}/${imageName}:latest --push .`,
             env: {
               DOCKER_USERNAME: '${{ secrets.DOCKER_USERNAME }}',
               DOCKER_PASSWORD: '${{ secrets.DOCKER_PASSWORD }}'
@@ -55,11 +53,7 @@ const generateGitHubActionsConfig = (branchName, language, requireTests, usernam
   // Convert the configuration object to YAML format
   const yamlConfig = yaml.dump(config);
 
-  // // Convert the configuration object to YAML format
-  // const yamlConfig = yaml.stringify(config);
-
   return yamlConfig;
-  
 };
 
 module.exports = {

@@ -39,9 +39,13 @@
         });
 
         const data = await response.json();
-        let config = data.config.replace(/>\-|\|2\-/g, ''); // Remove '>-', '|2-'
-        config = config.replace(/'on':/g, 'on:'); // Remove 'on' to 'on'
+        // let config = data.config.replace(/>-\n/g, ''); // Remove '>-\n'
+
+        // config = config.replace(/'on':/g, 'on:'); // Remove 'on' to 'on'
+        // config = config.replace(/run: /g, 'run: '); // Remove extra space after 'run:'
         
+        let config = data.config.replace(/'on':/g, 'on:'); // Remove 'on' to 'on'
+
         const configBox = document.getElementById('config-box');
         configBox.textContent = config;
       } catch (error) {
