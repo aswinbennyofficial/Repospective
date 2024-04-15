@@ -38,6 +38,10 @@
         color: #fff; /* White text color */
     }
 
+    .navbar{
+        background-color: #1c1c1c;
+    }
+
         .jumbotron {
             background-color: #212529;
             color:#ffffff8a;
@@ -96,6 +100,65 @@
     }
 
     
+    .tool-sections {
+  display: flex; /* Use flexbox for horizontal layout */
+  justify-content: space-between; /* Distribute sections evenly */
+  margin-bottom: 100px;
+  flex-wrap: wrap; /* Wrap sections to fit on smaller screens */
+}
+
+.tool-section {
+  display: flex; /* Make sections themselves flexible */
+  align-items: center; /* Vertically center content within each section */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 40px 0; /* Consistent margin for top and bottom */
+  width: calc(100% - 30px); /* Full width on each row */
+  
+}
+
+.tool-section:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tool-image {
+  width: 75px;
+  height: auto;
+  margin: 0 40px 0 0;
+}
+
+.tool-section:nth-child(2) .tool-image {  /* Right-align image for second section */
+  margin: 0 0 0 15px;
+}
+
+.tool-content {
+  flex: 1; /* Allow content to fill remaining space */
+}
+
+.tool-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.tool-section p {
+  font-size: 1rem;
+  color: #777;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.tool-section a {
+  padding: 10px 20px;
+  background-color: #333; /* Primary button color */
+  color: #fff; /* Button text color */
+  border: none;
+  border-radius: 5px;
+  transition: all 0.
+}
+
+    
 
 
     </style>
@@ -151,29 +214,38 @@
 </div>
 
 
-    <!-- Features Section -->
-<div class="feature-container container">
-    <div class="row">
-        <div class="feature-col col-sm-4">
-            <div class="feature-box">
-                <h3>Repo Analytics</h3>
-                <p>Discover insights about your repositories</p>
-            </div>
-        </div>
-        <div class="feature-col col-sm-4">
-            <div class="feature-box">
-                <h3>Most Famous Forks</h3>
-                <p>Explore popular forks of your repositories</p>
-            </div>
-        </div>
-        <div class="feature-col col-sm-4">
-            <div class="feature-box">
-                <h3>GA Config Generator</h3>
-                <p>Create GitHub Actions configurations easily</p>
-            </div>
-        </div>
+<div class="tool-sections container">
+    <div class="tool-section">
+      <img src="https://web-images.credcdn.in/v2/_next/assets/images/landing/desktop/footer-logo.png" alt="Repo Analytics Image" class="tool-image">
+      <div class="tool-content">
+        <h3>Repo Analytics</h3>
+        <p>Uncover hidden trends and patterns within your code repositories. Identify areas for improvement, track project health, and gain valuable insights to make informed decisions.</p>
+        <a href="#" class="btn btn-primary">Explore Analytics</a>
+      </div>
     </div>
-</div>
+    
+    <div class="tool-section">
+      <div class="tool-content">
+        <h3>Most Famous Forks</h3>
+        <p>Explore the most popular forks of your repositories. Discover how others are extending and modifying your code, gain inspiration for new features, and potentially collaborate with passionate developers.</p>
+        <a href="#" class="btn btn-primary">Discover Forks</a>
+      </div>
+      <img src="https://web-images.credcdn.in/v2/_next/assets/images/landing/desktop/footer-logo.png" alt="Most Famous Forks Image" class="tool-image">
+    </div>
+    
+    <div class="tool-section">
+      <img src="https://web-images.credcdn.in/v2/_next/assets/images/landing/desktop/footer-logo.png" alt="GitHub Actions Config Generator Image" class="tool-image">
+      <div class="tool-content">
+        <h3>GitHub Actions Config Generator</h3>
+        <p>Effortlessly create custom configurations for GitHub Actions. Automate workflows, streamline development processes, and save time by generating the code you need with minimal effort.</p>
+        <a href="#" class="btn btn-primary">Build Your Workflow</a>
+      </div>
+    </div>
+  </div>
+  
+
+
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
