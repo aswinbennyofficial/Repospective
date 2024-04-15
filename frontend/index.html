@@ -9,7 +9,7 @@
     <style>
         /* Custom styling for dark mode */
         body {
-            background-color: #000000;
+            background-color: #121212;
             color: #fff;
         }
 
@@ -37,34 +37,42 @@
         }
 
         .feature-box {
-            background-color: #343a40;
-            color: #fff;
-            border: 1px solid #6c757d;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px;
-            text-align: center;
-            transition: transform 0.3s ease-in-out;
-        }
+        background-color: rgb(11, 11, 13); /* Transparent white background */
+        border-radius: 10px; /* Rounded corners */
+        padding: 20px;
+        margin-bottom: 20px; /* Add some space between feature boxes */
+        height: 100%; /* Ensure boxes have equal height */
+        text-align: center;
+    }
 
-        .feature-box:hover {
-            transform: scale(1.05);
-        }
 
-        .hero-video{
-            object-fit: cover;
-        }
+    .feature-box p {
+        color: #8d8d8d; /* Medium text color */
+    }
 
-        .jumbotron {
-            min-height: 600px; /* Adjust the minimum height as needed */
-            padding-top: 100px; /* Adjust the top padding as needed */
-            padding-bottom: 100px; /* Adjust the bottom padding as needed */
-        }
+    .hero-video{
+        object-fit: cover;
+    }
+
+    .jumbotron {
+        min-height: 600px; /* Adjust the minimum height as needed */
+        padding-top: 100px; /* Adjust the top padding as needed */
+        padding-bottom: 100px; /* Adjust the bottom padding as needed */
+    }
+
+    .feature-col{
+        padding: 10px;
+    }
+
+    .feature-box h3 {
+       color: #e8dede;
+    }
+
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="#">Repospective</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,28 +111,28 @@
 
 
     <!-- Features Section -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="feature-box">
-                    <h3>Repo Analytics</h3>
-                    <p>Discover insights about your repositories</p>
-                </div>
+<div class="container">
+    <div class="row">
+        <div class="feature-col col-sm-4">
+            <div class="feature-box">
+                <h3>Repo Analytics</h3>
+                <p>Discover insights about your repositories</p>
             </div>
-            <div class="col-sm-4">
-                <div class="feature-box">
-                    <h3>Most Famous Forks</h3>
-                    <p>Explore popular forks of your repositories</p>
-                </div>
+        </div>
+        <div class="feature-col col-sm-4">
+            <div class="feature-box">
+                <h3>Most Famous Forks</h3>
+                <p>Explore popular forks of your repositories</p>
             </div>
-            <div class="col-sm-4">
-                <div class="feature-box">
-                    <h3>GitHub Actions Config Generator</h3>
-                    <p>Create GitHub Actions configurations easily</p>
-                </div>
+        </div>
+        <div class="feature-col col-sm-4">
+            <div class="feature-box">
+                <h3>GA Config Generator</h3>
+                <p>Create GitHub Actions configurations easily</p>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
