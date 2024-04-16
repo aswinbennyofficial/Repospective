@@ -29,7 +29,8 @@ background-color: #1c1c1c;
 
 
 #repoDetails{
-    margin-bottom: 250px;
+    margin-bottom: 300px;
+    text-align: center;
 }
 
 .card-body {
