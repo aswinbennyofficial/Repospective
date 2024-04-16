@@ -30,9 +30,23 @@
 
             color: #f0f9ff;
             background-color: #343a40;
+            border-radius: 10px;
+            padding: 20px;
 
 
         }
+
+        .card{
+            background-color: black;
+            border-radius: 5px;
+        }
+
+        .card-title{
+            text-align: center;
+            margin-bottom: 30px
+        }
+
+        
 
         #results{
             margin-bottom: 150px;
@@ -135,22 +149,48 @@
     }
 
     function displayForks(forks) {
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = ''; // Clear previous results
-        forks.forEach(fork => {
-            const forkDiv = document.createElement('div');
-            forkDiv.classList.add('card', 'mb-3');
-            forkDiv.innerHTML = `
-                <div class="card-body">
-                    <a href=${fork.url}><h5 class="card-title">${fork.full_name}</h5></a>
-                    <p class="card-text">${fork.description}</p>
-                    <p class="card-text">Created at: ${fork.created_at}</p>
-                    <!-- Add more details as needed -->
-                </div>
-            `;
-            resultsDiv.appendChild(forkDiv);
-        });
-    }
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = ''; // Clear previous results
+    forks.forEach((fork, index) => {
+        if (index % 2 === 0) {
+            // Create a new row for every even-indexed fork
+            const row = document.createElement('div');
+            row.classList.add('row', 'mb-3');
+            resultsDiv.appendChild(row);
+        }
+
+        // Create a card column for each fork
+        const col = document.createElement('div');
+        col.classList.add('col-md-6');
+
+        const forkDiv = document.createElement('div');
+        forkDiv.classList.add('card', 'mb-3');
+        forkDiv.innerHTML = `
+            <div class="card-body">
+                <h4 class="card-title poppins-semibold">${fork.full_name}</h4>
+                <p class="card-text">${fork.description}</p>
+                
+
+                <p class="card-text"><i class="fas fa-eye"></i> Watchers: ${fork.watchers}</p>
+                <p class="card-text"><i class="fas fa-code-branch"></i> Forks: ${fork.forks}</p>
+                <p class="card-text"><i class="fas fa-star"></i> Stars: ${fork.stars}</p>
+                ${fork.archived ? '<p class="card-text text-danger">Archived</p>' : ''}
+                <p class="card-text">Created at: ${fork.created_at}</p>
+                <p class="card-text">Pushed at: ${fork.pushed_at}</p>
+
+                <a href="/pages/forks.html?q=${encodeURIComponent(fork.url)}" class="btn btn-primary">Fetch Fork</a>
+                <a href="${fork.url}" class="btn btn-secondary" target="_blank">Visit Repo</a>
+            </div>
+        `;
+        col.appendChild(forkDiv);
+
+        // Append the column to the last row
+        const rows = resultsDiv.querySelectorAll('.row');
+        const lastRow = rows[rows.length - 1];
+        lastRow.appendChild(col);
+    });
+}
+
 
     window.addEventListener('DOMContentLoaded', (event) => {
             const urlParams = new URLSearchParams(window.location.search);
