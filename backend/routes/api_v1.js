@@ -27,7 +27,7 @@ router.get('/forks/:username/:repo', async (req, res) => {
 
   try {
     // Call the getForks function with async/await
-    const forks = await getForks(username, repo, sort, GITHUB_TOKEN);
+    const forks = await getForks(username, repo, sort, GITHUB_TOKEN,limit);
 
     if (forks) {
       // Send the fetched fork data as JSON response (assuming successful)
