@@ -93,29 +93,89 @@
         }
 
         function displayRepoDetails(repoDetails) {
-            const repoDetailsDiv = document.getElementById('repoDetails');
-            repoDetailsDiv.innerHTML = `
-                <div class="card">
+    const repoDetailsDiv = document.getElementById('repoDetails');
+    repoDetailsDiv.innerHTML = `
+        <h2>${repoDetails.full_name}</h2>
+        <p>Description: ${repoDetails.description}</p>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">${repoDetails.full_name}</h2>
-                        <p class="card-text">${repoDetails.description}</p>
-                        <ul class="list-unstyled">
-                            <li><i class="fas fa-star"></i> Stars: ${repoDetails.stars}</li>
-                            <li><i class="fas fa-eye"></i> Watchers: ${repoDetails.watchers}</li>
-                            <li><i class="fas fa-code-branch"></i> Forks: ${repoDetails.forks}</li>
-                            <li><i class="far fa-calendar-alt"></i> Created at: ${repoDetails.created_at}</li>
-                            <li><i class="far fa-calendar-alt"></i> Updated at: ${repoDetails.updated_at}</li>
-                            <li><i class="far fa-calendar-alt"></i> Pushed at: ${repoDetails.pushed_at}</li>
-                            <li><i class="fas fa-hdd"></i> Size: ${repoDetails.size}</li>
-                            <li><i class="fas fa-exclamation-circle"></i> Open Issues: ${repoDetails.open_issues}</li>
-                            <li><i class="fas fa-network-wired"></i> Network Count: ${repoDetails.network_count}</li>
-                            <li><i class="fas fa-users"></i> Subscribers Count: ${repoDetails.subscribers_count}</li>
-                            <li><i class="fas fa-code"></i> Language: ${repoDetails.language}</li>
-                        </ul>
+                        <h5 class="card-title"><i class="fas fa-star"></i> Stars</h5>
+                        <p class="card-text">${repoDetails.stars}</p>
                     </div>
                 </div>
-            `;
-        }
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-eye"></i> Watchers</h5>
+                        <p class="card-text">${repoDetails.watchers}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-code-branch"></i> Forks</h5>
+                        <p class="card-text">${repoDetails.forks}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="far fa-calendar-alt"></i> Created at</h5>
+                        <p class="card-text">${repoDetails.created_at}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-hourglass-half"></i> Pushed at</h5>
+                        <p class="card-text">${repoDetails.pushed_at}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-folder"></i> Size</h5>
+                        <p class="card-text">${repoDetails.size} kb</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-exclamation-circle"></i> Open Issues</h5>
+                        <p class="card-text">${repoDetails.open_issues}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-network-wired"></i> Network Count</h5>
+                        <p class="card-text">${repoDetails.network_count}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-users"></i> Subscribers Count</h5>
+                        <p class="card-text">${repoDetails.subscribers_count}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
