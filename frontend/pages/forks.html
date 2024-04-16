@@ -142,7 +142,7 @@
             forkDiv.classList.add('card', 'mb-3');
             forkDiv.innerHTML = `
                 <div class="card-body">
-                    <h5 class="card-title">${fork.full_name}</h5>
+                    <a href=${fork.url}><h5 class="card-title">${fork.full_name}</h5></a>
                     <p class="card-text">${fork.description}</p>
                     <p class="card-text">Created at: ${fork.created_at}</p>
                     <!-- Add more details as needed -->
