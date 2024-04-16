@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
+    <!-- fontawesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
     <!-- IMports fonts css -->
     <link rel="stylesheet" href="./styles/fonts.css">
 
@@ -99,7 +103,7 @@
 .tool-image {
   width: 75px;
   height: auto;
-  margin: 0 40px 0 0;
+  margin: 0 40px 0 40px;
 }
 
 .tool-section:nth-child(2) .tool-image {  /* Right-align image for second section */
@@ -200,34 +204,33 @@
 
 
 
-<div class="tool-sections container">
-    <div class="tool-section">
-      <img src="https://web-images.credcdn.in/v2/_next/assets/images/landing/desktop/footer-logo.png" alt="Repo Analytics Image" class="tool-image">
-      <div class="tool-content">
+<div class="tool-section">
+    <i class="fas fa-chart-line tool-image fa-4x"></i>
+    <div class="tool-content">
         <h3>Repo Analytics</h3>
         <p>Uncover hidden trends and patterns within your code repositories. Identify areas for improvement, track project health, and gain valuable insights to make informed decisions.</p>
-        <a href="#" class="btn btn-primary">Explore ... </a>
-      </div>
+        <a href="#" class="btn btn-primary">Explore ...</a>
     </div>
-    
-    <div class="tool-section">
-      <div class="tool-content">
+</div>
+
+<div class="tool-section">
+    <div class="tool-content">
         <h3>Most Famous Forks</h3>
         <p>Explore the most popular forks of your repositories. Discover how others are extending and modifying your code, gain inspiration for new features, and potentially collaborate with passionate developers.</p>
         <a href="#" class="btn btn-primary">Explore ...</a>
-      </div>
-      <img src="./public/images/analytics.jpeg" alt="Most Famous Forks Image" class="tool-image">
     </div>
-    
-    <div class="tool-section">
-      <img src="https://web-images.credcdn.in/v2/_next/assets/images/landing/desktop/footer-logo.png" alt="GitHub Actions Config Generator Image" class="tool-image">
-      <div class="tool-content">
+    <i class="fas fa-code-branch tool-image fa-4x"></i>
+</div>
+
+<div class="tool-section">
+    <i class="fas fa-cogs tool-image fa-4x"></i>
+    <div class="tool-content">
         <h3>GitHub Actions Config Generator</h3>
         <p>Effortlessly create custom configurations for GitHub Actions. Automate workflows, streamline development processes, and save time by generating the code you need with minimal effort.</p>
         <a href="#" class="btn btn-primary">Explore ...</a>
-      </div>
     </div>
-  </div>
+</div>
+
   
 
 
