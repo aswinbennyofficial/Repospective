@@ -15,14 +15,20 @@ async function getRepoDetails(username, repo, GITHUB_TOKEN) {
             const repoDetails = {
                 full_name: response.data.full_name,
                 description: response.data.description,
-                created_at: response.data.created_at,
-                updated_at: response.data.updated_at,
-                pushed_at: response.data.pushed_at,
                 url: response.data.html_url,
                 archived: response.data.archived,
                 watchers: response.data.watchers,
                 forks: response.data.forks,
-                stars: response.data.stargazers_count
+                stars: response.data.stargazers_count,
+                size: response.data.size,
+                open_issues: response.data.open_issues_count,
+                network_count: response.data.network_count,
+                subscribers_count: response.data.subscribers_count,
+                created_at: response.data.created_at,
+                updated_at: response.data.updated_at,
+                pushed_at: response.data.pushed_at,
+                language: response.data.language
+
             };
 
             return repoDetails;

@@ -1,0 +1,33 @@
+
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500; /* Medium (500) */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-dark .navbar-brand {
+    color: #fff;
+}
+
+/* Custom styles for the dark theme */
+.navbar-dark .dropdown-menu {
+background-color: #212529; /* Dark background color */
+}
+
+.navbar-dark .dropdown-menu a {
+color: #fff; /* White text color */
+}
+
+.navbar{
+background-color: #1c1c1c;
+}
+
+
+#repoDetails{
+    margin-bottom: 250px;
+}
