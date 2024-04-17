@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { getForks } = require('./../controllers/forks');
 const { getRepoDetails } = require('./../controllers/repoDetails');
+const {getGraphActivity} = require('./../controllers/repoDetails');
 const {generateGitHubActionsConfig} = require('./../controllers/ga-configGenerator');
 
 const dotenv = require('dotenv');
@@ -63,6 +64,23 @@ router.get('/repo/:username/:repo', async (req, res) => {
   }
 });
 
+// Fetch repo details
+router.get('/repo/:username/:repo/graph', async (req, res) => {
+  const { username, repo } = req.params;
+
+  try {
+    const repoDetails = await getGraphActivity(username, repo, GITHUB_TOKEN);
+
+    if (repoDetails) {
+      res.json(repoDetails);
+    } else {
+      res.status(500).json({ error: 'Failed to fetch repo details' });
+    }
+  } catch (error) {
+    console.error('Error fetching repo details:', error.message);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // Middleware to parse JSON bodies
 router.use(express.json());
