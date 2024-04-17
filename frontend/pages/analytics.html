@@ -61,13 +61,23 @@
                 <label for="repoUrl" class="form-label">Enter GitHub Repo URL</label>
                 <input type="text" id="repoUrl" class="form-control" placeholder="E.g., https://github.com/torvalds/linux">
             </div>
-            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Get Details</button>
+            <button id="searchButton" type="button" class="btn btn-primary"><i class="fas fa-search"></i> Get Details</button>
         </form>
         <div id="repoDetails" class="mt-4"></div>
 
-        <canvas id="commitActivityChart" width="400" height="200"></canvas>
-        <canvas id="contributorsChart" width="400" height="200"></canvas>
-        <canvas id="participationChart" width="400" height="200"></canvas>
+        <!-- Add a loading spinner or message -->
+        <div id="loadingIndicator" class="text-center" style="display: none;">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Loading...</p>
+        </div>
+
+        <!-- Hide the graphs initially -->
+        <canvas id="commitActivityChart" width="400" height="200" style="display: none;"></canvas>
+        <canvas id="contributorsChart" width="400" height="200" style="display: none;"></canvas>
+        <canvas id="participationChart" width="400" height="200" style="display: none;"></canvas>
+
 
         <div id="foot-seperator"></div>
     </div>
@@ -81,37 +91,80 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        document.getElementById('repoForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const repoUrl = document.getElementById('repoUrl').value;
-            const { username, repo } = parseGitHubUrl(repoUrl);
 
-            try {
-                // Fetch basic repo details
-                const repoDetailsResponse = await axios.get(`/api/v1/repo/${username}/${repo}`);
-                
-                if (repoDetailsResponse.data) {
-                    // Display repo details
-                    displayRepoDetails(repoDetailsResponse.data);
+document.getElementById('searchButton').addEventListener('click', async () => {
+    const repoUrl = document.getElementById('repoUrl').value;
+    const { username, repo } = parseGitHubUrl(repoUrl);
 
-                    // Fetch and display commit activity data
-                    const commitActivityResponse = await axios.get(`/api/v1/repo/${username}/${repo}/graph`);
-                    
-                    if (commitActivityResponse.data) {
-                        displayCommitActivityChart(commitActivityResponse.data);
-                        displayContributorsChart(commitActivityResponse.data);
-                        displayParticipationChart(commitActivityResponse.data);
-                    } else {
-                        alert('Error fetching commit activity data. Please try again.');
-                    }
-                } else {
-                    alert('Error fetching repo details. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error.message);
-                // alert('An error occurred. Please try again.');
+    try {
+        // Show loading indicator
+        document.getElementById('loadingIndicator').style.display = 'block';
+
+        // Destroy existing charts
+        destroyCharts();
+
+        // Fetch basic repo details
+        const repoDetailsResponse = await axios.get(`/api/v1/repo/${username}/${repo}`);
+
+        if (repoDetailsResponse.data) {
+            // Display repo details
+            displayRepoDetails(repoDetailsResponse.data);
+
+            // Fetch and display commit activity data
+            const commitActivityResponse = await axios.get(`/api/v1/repo/${username}/${repo}/graph`);
+
+            if (commitActivityResponse.data) {
+                // Hide loading indicator
+                document.getElementById('loadingIndicator').style.display = 'none';
+
+                // Display graphs
+                document.getElementById('commitActivityChart').style.display = 'block';
+                document.getElementById('contributorsChart').style.display = 'block';
+                document.getElementById('participationChart').style.display = 'block';
+
+                displayCommitActivityChart(commitActivityResponse.data);
+                displayContributorsChart(commitActivityResponse.data);
+                displayParticipationChart(commitActivityResponse.data);
+            } else {
+                // Hide loading indicator
+                document.getElementById('loadingIndicator').style.display = 'none';
+
+                alert('Error fetching commit activity data. Please try again.');
             }
-        });
+        } else {
+            // Hide loading indicator
+            document.getElementById('loadingIndicator').style.display = 'none';
+
+            alert('Error fetching repo details. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        // Hide loading indicator
+        document.getElementById('loadingIndicator').style.display = 'none';
+        // alert('An error occurred. Please try again.');
+    }
+});
+
+function destroyCharts() {
+    // Destroy commit activity chart
+    const commitActivityChart = Chart.getChart('commitActivityChart');
+    if (commitActivityChart) {
+        commitActivityChart.destroy();
+    }
+
+    // Destroy contributors chart
+    const contributorsChart = Chart.getChart('contributorsChart');
+    if (contributorsChart) {
+        contributorsChart.destroy();
+    }
+
+    // Destroy participation chart
+    const participationChart = Chart.getChart('participationChart');
+    if (participationChart) {
+        participationChart.destroy();
+    }
+}
+
 
         function parseGitHubUrl(url) {
             const parts = url.split('/');
@@ -240,6 +293,7 @@
             } else {
                 console.error('Commit activity data is not in the expected format:', commitActivityData);
                 alert('Error: Commit activity data is not in the expected format. Please try again.');
+                // commitActivityChartCanvas.style.display = 'none';
             }
         }
 
@@ -284,6 +338,7 @@
     } else {
         console.error('Contributors data is not in the expected format:', contributorsData);
         // alert('Error: Contributors data is not in the expected format. Please try again.');
+        // contributorsChartCanvas.style.display = 'none';
     }
 }
 
@@ -333,6 +388,7 @@ function displayParticipationChart(graphData) {
     } else {
         console.error('Participation data is not in the expected format:', participationData);
         // alert('Error: Participation data is not in the expected format. Please try again.');
+        // participationChartCanvas.style.display = 'none';
     }
 }
 
