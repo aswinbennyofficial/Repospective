@@ -35,7 +35,7 @@ background-color: #1c1c1c;
 }
 
 #foot-seperator{
-    margin-bottom: 300px;
+    margin-bottom: 250px;
 }
 
 .card-body {
@@ -62,4 +62,12 @@ background-color: #1c1c1c;
 
 .card-text{
     text-align: center;
+}
+
+#participationChart{
+    margin-top: 30px;
+}
+
+#contributorsChart{
+    margin-top: 30px;
 }

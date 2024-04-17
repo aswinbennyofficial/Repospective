@@ -66,6 +66,8 @@
         <div id="repoDetails" class="mt-4"></div>
 
         <canvas id="commitActivityChart" width="400" height="200"></canvas>
+        <canvas id="contributorsChart" width="400" height="200"></canvas>
+        <canvas id="participationChart" width="400" height="200"></canvas>
 
         <div id="foot-seperator"></div>
     </div>
@@ -97,6 +99,8 @@
                     
                     if (commitActivityResponse.data) {
                         displayCommitActivityChart(commitActivityResponse.data);
+                        displayContributorsChart(commitActivityResponse.data);
+                        displayParticipationChart(commitActivityResponse.data);
                     } else {
                         alert('Error fetching commit activity data. Please try again.');
                     }
@@ -202,26 +206,61 @@
         }
 
         function displayCommitActivityChart(graphData) {
-    const commitActivityChartCanvas = document.getElementById('commitActivityChart');
-    
-    // Extract commit_activity data from the graphData object
-    const commitActivityData = graphData.commit_activity;
-    
-    // Check if commitActivityData is an array
-    if (Array.isArray(commitActivityData)) {
-        const labels = commitActivityData.map(entry => entry.week);
-        const data = commitActivityData.map(entry => entry.total);
+            const commitActivityChartCanvas = document.getElementById('commitActivityChart');
+            const commitActivityData = graphData.commit_activity;
+            if (Array.isArray(commitActivityData)) {
+                const labels = commitActivityData.map(entry => entry.week);
+                const data = commitActivityData.map(entry => entry.total);
 
-        new Chart(commitActivityChartCanvas, {
-            type: 'line',
+                new Chart(commitActivityChartCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Commits per Week',
+                            data: data,
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Commits per Week'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.error('Commit activity data is not in the expected format:', commitActivityData);
+                alert('Error: Commit activity data is not in the expected format. Please try again.');
+            }
+        }
+
+        
+        function displayContributorsChart(graphData) {
+    const contributorsChartCanvas = document.getElementById('contributorsChart');
+    const contributorsData = graphData.contributors;
+    if (Array.isArray(contributorsData)) {
+        const labels = contributorsData.map(entry => entry.author.login);
+        const data = contributorsData.map(entry => entry.total);
+
+        new Chart(contributorsChartCanvas, {
+            type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Commits per Week',
+                    label: 'Contributions',
                     data: data,
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1
                 }]
             },
             options: {
@@ -229,19 +268,71 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Commits per Week'
+                        text: 'Contributors and Contributions'
                     },
                     legend: {
                         display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
         });
     } else {
-        console.error('Commit activity data is not in the expected format:', commitActivityData);
-        // You can handle this error as per your requirement
-        // For now, let's log an error and display a message to the user
-        alert('Error: Commit activity data is not in the expected format. Please try again.');
+        console.error('Contributors data is not in the expected format:', contributorsData);
+        alert('Error: Contributors data is not in the expected format. Please try again.');
+    }
+}
+
+function displayParticipationChart(graphData) {
+    const participationChartCanvas = document.getElementById('participationChart');
+    const participationData = graphData.participation;
+    if (participationData && Array.isArray(participationData.all) && Array.isArray(participationData.owner)) {
+        const labels = Array.from({ length: participationData.all.length }, (_, i) => i + 1); // Generate labels for weeks
+        const allData = participationData.all;
+        const ownerData = participationData.owner;
+
+        new Chart(participationChartCanvas, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'All',
+                        data: allData,
+                        borderColor: 'rgb(54, 162, 235)',
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Owner',
+                        data: ownerData,
+                        borderColor: 'rgb(255, 99, 132)',
+                        fill: false,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Participation per Week'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    } else {
+        console.error('Participation data is not in the expected format:', participationData);
+        alert('Error: Participation data is not in the expected format. Please try again.');
     }
 }
 
