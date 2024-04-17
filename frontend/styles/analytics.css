@@ -29,8 +29,13 @@ background-color: #1c1c1c;
 
 
 #repoDetails{
-    margin-bottom: 300px;
+   
     text-align: center;
+    margin-bottom: 30px;
+}
+
+#foot-seperator{
+    margin-bottom: 300px;
 }
 
 .card-body {
