@@ -3,9 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <link rel="icon" type="image/png" href="../public/images/favicon_io/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="../public/images/favicon_io/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" href="../public/images/favicon_io/apple-touch-icon.png">
+    <link rel="shortcut icon" href="../public/images/favicon_io/favicon.ico">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./../styles/fonts.css">
+    <link rel="stylesheet" href="./../styles/forks.css">
+
+    <title>Repospective</title>
 </head>
 <body>
-    
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="../public/images/repospective-logo-cropped.png" alt="Repospective Logo" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                
+                <li class="nav-item dropdown"> <!-- Add dropdown class to parent -->
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Tools
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> <!-- Add dropdown-menu class -->
+                        <li><a class="dropdown-item" href="../pages/analytics.html">Repo Analytics</a></li>
+                        <li><a class="dropdown-item" href="../pages/forks.html">Most Famous Forks</a></li>
+                        <li><a class="dropdown-item" href="../pages/config-gen.html">GitHub Actions Config Generator</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1>GitHub Actions Config Generator</h1>
+    <form id="configForm">
+        <div class="mb-3">
+            <label for="branchName" class="form-label">Branch Name</label>
+            <input type="text" id="branchName" class="form-control" placeholder="Branch Name">
+        </div>
+        <div class="mb-3">
+            <label for="language" class="form-label">Language</label>
+            <select id="language" class="form-select">
+                <option value="javascript">JavaScript</option>
+                <option value="golang">GoLang</option>
+                <option value="python">Python</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="requireTests" class="form-label">Require Tests</label>
+            <select id="requireTests" class="form-select">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="registryType" class="form-label">Registry Type</label>
+            <input type="text" id="registryType" class="form-control" placeholder="Registry Type">
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" class="form-control" placeholder="Username">
+        </div>
+        <div class="mb-3">
+            <label for="imageName" class="form-label">Image Name</label>
+            <input type="text" id="imageName" class="form-control" placeholder="Image Name">
+        </div>
+        <button type="submit" class="btn btn-primary">Generate Config</button>
+    </form>
+    <div class="mt-4">
+        <h2>Generated GitHub Actions Configuration</h2>
+        <textarea id="configOutput" class="form-control" rows="10" readonly></textarea>
+        <button id="copyButton" class="btn btn-secondary mt-3">Copy to Clipboard</button>
+    </div>
+</div>
+
+<footer class="bg-body-tertiary text-center">
+    <div class="container p-4"></div>
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2020 Copyright:
+      <a class="text-white" href="https://aswinbenny.in">aswinbenny.in</a>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+document.getElementById('configForm').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    const branchName = document.getElementById('branchName').value;
+    const language = document.getElementById('language').value;
+    const requireTests = document.getElementById('requireTests').value;
+    const registryType = document.getElementById('registryType').value;
+    const username = document.getElementById('username').value;
+    const imageName = document.getElementById('imageName').value;
+
+    try {
+        const response = await axios.post('/api/v1/ga-config', {
+            branchName: branchName,
+            language: language,
+            requireTests: requireTests,
+            registryType: registryType,
+            username: username,
+            imageName: imageName
+        });
+        
+        const configOutput = document.getElementById('configOutput');
+        configOutput.value = response.data.config;
+    } catch (error) {
+        console.error('Error:', error.message);
+        alert('An error occurred while generating the configuration. Please try again.');
+    }
+});
+
+document.getElementById('copyButton').addEventListener('click', () => {
+    const configOutput = document.getElementById('configOutput');
+    configOutput.select();
+    document.execCommand('copy');
+    alert('Configuration copied to clipboard!');
+});
+</script>
 </body>
 </html>
