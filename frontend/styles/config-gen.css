@@ -28,3 +28,26 @@ background-color: #1c1c1c;
 }
 
 
+
+
+
+ 
+
+
+/* Style form inputs and buttons */
+.form-control,
+.btn {
+    border-color: slategray; /* Slate gray border color */
+}
+
+.form-control:focus,
+.btn:focus {
+    box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25); /* Focus shadow */
+}
+
+/* Style output textarea */
+#configOutput {
+    background-color: slategray; /* Slate gray background color */
+    color: #fff; /* White text color */
+    border-color: slategray; /* Slate gray border color */
+}
