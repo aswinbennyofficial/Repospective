@@ -62,6 +62,7 @@
                 <input type="text" id="repoUrl" class="form-control" placeholder="E.g., https://github.com/torvalds/linux">
             </div>
             <button id="searchButton" type="button" class="btn btn-primary"><i class="fas fa-search"></i> Get Details</button>
+            <button id="fetchForksButton" type="button" class="btn btn-secondary"><i class="fas fa-code-branch"></i> Fetch Forks</button>
         </form>
         <div id="repoDetails" class="mt-4"></div>
 
@@ -392,6 +393,11 @@ function displayParticipationChart(graphData) {
     }
 }
 
+document.getElementById('fetchForksButton').addEventListener('click', () => {
+    const repoUrl = document.getElementById('repoUrl').value;
+    const forksUrl = `../pages/forks.html?q=${encodeURIComponent(repoUrl)}`;
+    window.location.href = forksUrl;
+});
 
 
     </script>
