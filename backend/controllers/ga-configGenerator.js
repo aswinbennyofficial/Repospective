@@ -1,10 +1,6 @@
 const yaml = require('js-yaml');
 
-const generateGitHubActionsConfig = (branchName, language, requireTests, username, imageName, registryUrl = 'docker.io') => {
-
-  // Convert requireTests to a boolean value
-  requireTests = Boolean(requireTests);
-
+const generateGitHubActionsConfig = (branchName, language, requireTests, username, imageName, registryUrl) => {
   // Validate input parameters (optional)
   if (!branchName || !username || !imageName) {
     throw new Error('Missing required arguments: branchName, username, imageName');
@@ -33,7 +29,7 @@ const generateGitHubActionsConfig = (branchName, language, requireTests, usernam
           // Run tests if required
           {
             name: 'Run Tests',
-            run: requireTests ? getTestScript(language) : 'echo "Tests not required"'
+            run: getTestScript(language,requireTests)
           },
           {
             name: 'Set up Docker Buildx',
@@ -41,7 +37,8 @@ const generateGitHubActionsConfig = (branchName, language, requireTests, usernam
           },
           {
             name: 'Login to Docker Registry',
-            run: `echo "\${{ secrets.DOCKER_PASSWORD }}" | docker login ${registryUrl} --username "\${{ secrets.DOCKER_USERNAME }}" --password-stdin`
+            run: registryUrl ? `echo "\${{ secrets.DOCKER_PASSWORD }}" | docker login ${registryUrl} --username "\${{ secrets.DOCKER_USERNAME }}" --password-stdin` :
+                               `echo "\${{ secrets.DOCKER_PASSWORD }}" | docker login docker.io --username "\${{ secrets.DOCKER_USERNAME }}" --password-stdin`
           },
           {
             name: 'Build and push Docker image',
@@ -77,16 +74,21 @@ const getEnvironmentSetupScript = (language) => {
 };
 
 // Function to get the test script based on the selected language
-const getTestScript = (language) => {
-  switch (language) {
-    case 'javascript':
-      return 'npm test';
-    case 'golang':
-      return 'go test ./...';
-    case 'python':
-      return 'pytest';
-    default:
-      return 'echo "Unsupported language"';
+const getTestScript = (language,requireTests) => {
+  if (requireTests==='true'){
+    switch (language) {
+      case 'javascript':
+        return 'npm test';
+      case 'golang':
+        return 'go test ./...';
+      case 'python':
+        return 'pytest';
+      default:
+        return 'echo "Unsupported language"';
+    }
+  }
+  else{
+    return 'echo "no tests defined"'
   }
 };
 
