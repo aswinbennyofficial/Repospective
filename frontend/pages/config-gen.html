@@ -129,7 +129,7 @@ document.getElementById('configForm').addEventListener('submit', async (event) =
         });
         
         const configOutput = document.getElementById('configOutput');
-        configOutput.value = response.data.config;
+        configOutput.value = response.data.config.replace(/'on'/g, 'on');;
     } catch (error) {
         console.error('Error:', error.message);
         alert('An error occurred while generating the configuration. Please try again.');
@@ -142,6 +142,8 @@ document.getElementById('copyButton').addEventListener('click', () => {
     document.execCommand('copy');
     alert('Configuration copied to clipboard!');
 });
+
+
 </script>
 </body>
 </html>
