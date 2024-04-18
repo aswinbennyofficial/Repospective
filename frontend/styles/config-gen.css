@@ -47,7 +47,33 @@ background-color: #1c1c1c;
 
 /* Style output textarea */
 #configOutput {
-    background-color: slategray; /* Slate gray background color */
+    background-color: #343a40; /* Slate gray background color */
     color: #fff; /* White text color */
     border-color: slategray; /* Slate gray border color */
+}
+
+.card-body {
+    /* color: black;
+    background-image: linear-gradient(45deg, #88755b, #ffd70063); */
+
+    color: #f0f9ff;
+    background-color: #343a40;
+    border-radius: 10px;
+    padding: 20px;
+
+
+}
+
+.card{
+    background-color: black;
+    border-radius: 5px;
+}
+
+.card-title{
+    text-align: center;
+    margin-bottom: 30px
+}
+
+.card-text{
+    text-align: center;
 }
