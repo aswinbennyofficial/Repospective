@@ -93,8 +93,9 @@ router.use(express.json());
 // Route to create github actions configuration
 router.post('/ga-config', (req, res) => {
 
-  const {branchName, language, requireTests, registryType, username, imageName} = req.body;
-  const config = generateGitHubActionsConfig(branchName, language, requireTests, registryType, username, imageName);
+  const {branchName, language, requireTests, registryUrl, username, imageName} = req.body;
+  console.log(branchName, language, requireTests, registryUrl, username, imageName);
+  const config = generateGitHubActionsConfig(branchName, language, requireTests, username, imageName, registryUrl);
   // Send as json response where the response will have keyt called config
   const response = {
     "config":config
