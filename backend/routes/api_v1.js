@@ -5,6 +5,7 @@ const { getForks } = require('./../controllers/forks');
 const { getRepoDetails } = require('./../controllers/repoDetails');
 const {getGraphActivity} = require('./../controllers/repoDetails');
 const {generateGitHubActionsConfig} = require('./../controllers/ga-configGenerator');
+const {contactMe} = require('./../controllers/contactMe');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -94,7 +95,7 @@ router.use(express.json());
 router.post('/ga-config', (req, res) => {
 
   const {branchName, language, requireTests, registryUrl, username, imageName} = req.body;
-  console.log(branchName, language, requireTests, registryUrl, username, imageName);
+  // console.log(branchName, language, requireTests, registryUrl, username, imageName);
   const config = generateGitHubActionsConfig(branchName, language, requireTests, username, imageName, registryUrl);
   // Send as json response where the response will have keyt called config
   const response = {
@@ -103,6 +104,23 @@ router.post('/ga-config', (req, res) => {
   res.json(response);
 });
 
+
+router.use(express.urlencoded({ extended: true }));
+
+router.post('/email', async (req, res) => {
+  const { emailID, emailSubject, emailBody } = req.body;
+  console.log(emailID, emailSubject, emailBody);
+
+  try {
+      // Call contactMe function and wait for the result
+      const result = await contactMe(emailID, emailSubject, emailBody);
+      res.status(200).json({ message: 'Email sent successfully' });
+      console.log('Email sent successfully /email');
+  } catch (error) {
+      console.error('Error:', error.message);
+      res.status(500).json({ error: 'Failed to send email' });
+  }
+});
 
 // Export the router object
 module.exports = router;
