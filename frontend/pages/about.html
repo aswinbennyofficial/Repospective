@@ -69,26 +69,24 @@
 </nav>
 
 
-<div class="container">
-    <h1 class="mt-5 mb-4">Contact Us</h1>
-    <form id="contactForm">
-        <div class="mb-3">
-            <label for="emailID" class="form-label">Email Address</label>
-            <input type="email" id="emailID" name="emailID" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="emailSubject" class="form-label">Subject</label>
-            <input type="text" id="emailSubject" name="emailSubject" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="emailBody" class="form-label">Message</label>
-            <textarea id="emailBody" name="emailBody" class="form-control" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Send Email</button>
-    </form>
+<div class="container mt-5">
+    <h1>About Repospective</h1>
+    <p>Repospective is a project aimed at providing valuable insights and tools for GitHub repositories. Whether you're an individual developer, a team, or an organization, Repospective offers a range of features to enhance your GitHub experience.</p>
+    
+    <h2>Features</h2>
+    <ul>
+        <li>Repo Analytics: Gain insights into your repository's performance, contributors, and more.</li>
+        <li>Most Famous Forks: Explore the most forked repositories on GitHub.</li>
+        <li>GitHub Actions Config Generator: Easily generate configuration files for GitHub Actions workflows.</li>
+        <!-- Add more features as needed -->
+    </ul>
+    
+    <h2>Project Creator</h2>
+    <p>Repospective is created and maintained by <a href="https://github.com/aswinbennyofficial">Aswin Benny</a>. Aswin is a passionate developer with a keen interest in open-source projects.</p>
+    
+    <h2>Get Involved</h2>
+    <p>If you're interested in contributing to Repospective or have ideas for improvement, feel free to <a href="../pages/contact.html">contact us</a> or submit a pull request on <a href="https://github.com/aswinbennyofficial/repospective">GitHub</a>.</p>
 </div>
-
-
 
 
 
@@ -109,33 +107,7 @@
 </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-    document.getElementById('contactForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const emailID = document.getElementById('emailID').value;
-        const emailSubject = document.getElementById('emailSubject').value;
-        let emailBody = document.getElementById('emailBody').value;
-
-        // Strip HTML tags from email body
-        emailBody = emailBody.replace(/<[^>]*>?/gm, '');
-
-        try {
-            const response = await axios.post('/api/v1/email', {
-                emailID: emailID,
-                emailSubject: emailSubject,
-                emailBody: emailBody
-            });
-            alert('Email sent successfully!');
-            // Optionally, you can redirect the user to another page after successful submission
-            // window.location.href = '/success-page.html';
-        } catch (error) {
-            console.error('Error:', error.message);
-            alert('An error occurred while sending the email. Please try again.');
-        }
-    });
-</script>
 
 
 
