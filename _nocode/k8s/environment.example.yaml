@@ -1,0 +1,23 @@
+# Rename this to environment.yaml
+
+
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repospective-config
+data:
+  PORT: "3000"
+
+---
+
+# secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: repospective-secret
+type: Opaque
+data:
+  GITHUB_TOKEN: <base64-encoded-token>
+  BREVO_API: <base64-encoded-api-key>
+  ADMIN_EMAIL: <base64-encoded-email>
